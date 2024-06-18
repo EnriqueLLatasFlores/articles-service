@@ -63,6 +63,13 @@ public class ArticlesController {
         }
     }
 
+    //@DeleteMapping("/articles/{id}")
+    @DeleteMapping("/articles/{id}")
+    public ResponseEntity<Void> deleteArticle(@PathVariable(name="id") Long id){
+        articlesRepository.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
     private void validateArticle(Article article){
         if(article.getTitle() == null || article.getTitle().isEmpty()){
             throw new RuntimeException("El título del artículo es obligatorio");
