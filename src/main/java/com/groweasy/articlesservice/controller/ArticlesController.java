@@ -52,6 +52,17 @@ public class ArticlesController {
         }
     }
 
+    //@PatchMapping("/articles/{id}")
+    @PatchMapping("/articles/{id}")
+    public ResponseEntity<Article> updateArticle(@PathVariable(name="id") Long id, @RequestBody Article article){
+        try {
+            validateArticle(article);
+            return new ResponseEntity<Article>(articlesService.updateArticle(id, article), HttpStatus.OK);
+        }catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
     private void validateArticle(Article article){
         if(article.getTitle() == null || article.getTitle().isEmpty()){
             throw new RuntimeException("El título del artículo es obligatorio");

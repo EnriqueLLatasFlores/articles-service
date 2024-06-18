@@ -20,4 +20,16 @@ public class ArticlesServiceImpl implements ArticlesService {
     public Article getArticleById(Long id) {
         return articlesRepository.findById(id).orElse(null);
     }
+
+    @Override
+    public Article updateArticle(Long id, Article article) {
+        Article articleToUpdate = articlesRepository.findById(id).orElse(null);
+        if(null == articleToUpdate){
+            return null;
+        }
+        articleToUpdate.setTitle(article.getTitle());
+        articleToUpdate.setLink(article.getLink());
+        articleToUpdate.setImage(article.getImage());
+        return articlesRepository.save(articleToUpdate);
+    }
 }
